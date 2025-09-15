@@ -2,16 +2,10 @@
 	"name": "strapi-provider-upload-ibm-cos-s3",
 	"version": "0.0.1",
 	"description": "A storage provider for the Strapi CMS that manages file uploads to IBM COS S3",
-	"main": "dist/index.js",
-	"module": "dist/index.mjs",
-	"types": "dist/index.d.ts",
-	"exports": {
-		".": {
-			"require": "./dist/index.js",
-			"import": "./dist/index.mjs",
-			"types": "./dist/index.d.ts"
-		}
-	},
+	"main": "./dist/index.js",
+  	"module": "./dist/index.mjs",
+  	"source": "./src/index.ts",
+  	"types": "./dist/index.d.ts",
 	"sideEffects": false,
 	"files": [
 		"dist"
