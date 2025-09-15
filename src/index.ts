@@ -1,4 +1,5 @@
 import * as ibm from "ibm-cos-sdk";
+import type { ReadStream } from 'node:fs';
 
 type Config = {
   apiKey: string;
@@ -8,6 +9,27 @@ type Config = {
   acl: ibm.S3.Types.ObjectCannedACL;
   folder?: string;
 };
+
+export type File = {
+  name: string;
+  alternativeText?: string;
+  caption?: string;
+  width?: number;
+  height?: number;
+  formats?: Record<string, unknown>;
+  hash: string;
+  ext: string;
+  mime: string;
+  size: number;
+  sizeInBytes: number;
+  url: string;
+  previewUrl?: string;
+  path?: string;
+  provider?: string;
+  provider_metadata?: Record<string, unknown>;
+  stream?: ReadStream;
+  buffer?: Buffer;
+}
 
 export default {
   init: (config: Config) => {
@@ -23,14 +45,14 @@ export default {
     const getUrl = (key: string) =>
       `https://${config.bucket}.${config.endpoint}/${key}`;
 
-    return {
-      async upload(file:any) {
+
+    const upload = async(file:File) => {
         const key = getFileKey(file.hash, file.ext, config.folder);
 
         await cos
           .putObject({
             Key: key,
-            Body: Buffer.from(file.buffer, "binary"),
+            Body: file.stream || Buffer.from(file.buffer as any, 'binary'),
             ACL: config.acl,
             ContentType: file.mime,
             Bucket: config.bucket,
@@ -38,9 +60,18 @@ export default {
           .promise();
 
         file.url = getUrl(key);
+    }
+
+    return {
+      upload(file:File) {
+       return upload(file);
       },
 
-      async delete(file:any) {
+      uploadStream(file: File) {
+        return upload(file);
+      },
+
+      async delete(file:File) {
         const key = getFileKey(file.hash, file.ext, config.folder);
 
         return cos
