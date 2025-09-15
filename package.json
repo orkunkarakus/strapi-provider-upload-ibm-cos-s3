@@ -1,6 +1,6 @@
 {
 	"name": "strapi-provider-upload-ibm-cos-s3",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A storage provider for the Strapi CMS that manages file uploads to IBM COS S3",
 	"main": "./dist/index.js",
   	"module": "./dist/index.mjs",

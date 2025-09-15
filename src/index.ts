@@ -21,13 +21,15 @@ export default {
       folder ? `${folder}/${key}${ext}` : `${key}${ext}`;
 
     const getUrl = (key: string) =>
-      `https://${config.endpoint}/${config.bucket}/${key}`;
+      `https://${config.bucket}.${config.endpoint}/${key}`;
 
     return {
       async upload(file:any) {
+        const key = getFileKey(file.hash, file.ext, config.folder);
+
         await cos
           .putObject({
-            Key: file.hash,
+            Key: key,
             Body: Buffer.from(file.buffer, "binary"),
             ACL: config.acl,
             ContentType: file.mime,
@@ -35,7 +37,6 @@ export default {
           })
           .promise();
 
-        const key = getFileKey(file.hash, file.ext, config.folder);
         file.url = getUrl(key);
       },
 
