@@ -17,8 +17,8 @@ export default {
       endpoint: config.endpoint,
     });
 
-    const getFileKey = (key: string, folder?: string) =>
-      folder ? `${folder}/${key}` : key;
+    const getFileKey = (key: string, ext:string, folder?: string) =>
+      folder ? `${folder}/${key}${ext}` : `${key}${ext}`;
 
     const getUrl = (key: string) =>
       `https://${config.endpoint}/${config.bucket}/${key}`;
@@ -35,12 +35,12 @@ export default {
           })
           .promise();
 
-        const key = getFileKey(file.hash, config.folder);
+        const key = getFileKey(file.hash, file.ext, config.folder);
         file.url = getUrl(key);
       },
 
       async delete(file:any) {
-        const key = getFileKey(file.hash, config.folder);
+        const key = getFileKey(file.hash, file.ext, config.folder);
 
         return cos
           .deleteObject({
