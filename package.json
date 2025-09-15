@@ -1,0 +1,72 @@
+{
+	"name": "strapi-provider-upload-ibm-cos-s3",
+	"version": "0.0.1",
+	"description": "A storage provider for the Strapi CMS that manages file uploads to IBM COS S3",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"require": "./dist/index.js",
+			"import": "./dist/index.mjs",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"sideEffects": false,
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup src/index.ts --dts",
+		"dev": "tsup src/index.ts --dts --watch",
+		"type:check": "tsc --noEmit",
+		"type:sync": "typesync",
+		"size:check": "size-limit",
+		"lint": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix --max-warnings 0",
+		"prepare": "husky || true"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/orkunkarakus/strapi-provider-upload-ibm-cos-s3.git"
+	},
+	"keywords": [
+		"Strapi",
+		"IBM",
+		"COS",
+		"S3"
+	],
+	"author": "Orkun Karakus",
+	"license": "MIT",
+	"homepage": "https://github.com/orkunkarakus/strapi-provider-upload-ibm-cos-s3#readme",
+	"devDependencies": {
+		"@mr.karakus/eslint-config-react-ts": "0.0.5",
+		"@mr.karakus/prettier-config": "0.0.3",
+		"@size-limit/preset-app": "9.0.0",
+		"@tsconfig/node18": "18.2.4",
+		"@types/node": "18.11.18",
+		"eslint": "^8.19.0",
+		"husky": "^9.1.7",
+		"prettier": "3.3.3",
+		"size-limit": "9.0.0",
+		"tsup": "^8.5.0",
+		"typescript": "5.9.2"
+	},
+	"dependencies": {
+		"ibm-cos-sdk": "^1.14.1"
+	},
+	"size-limit": [
+		{
+			"path": "dist/index.mjs",
+			"limit": "5 kb"
+		},
+		{
+			"path": "dist/index.js",
+			"limit": "5 kb"
+		}
+	],
+	"packageManager": "bun@1.2.2",
+	"engines": {
+		"node": ">=18"
+	},
+	"prettier": "@mr.karakus/prettier-config"
+}
